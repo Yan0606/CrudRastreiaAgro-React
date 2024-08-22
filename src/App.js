@@ -3,7 +3,10 @@ import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { NavLink, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Cadastro from './components/Cadastro';
-
+import Agricultor from './components/Pages/Agricultor/Agricultor';
+import InserirAgricultor from './components/Pages/Agricultor/InserirAgricultor';
+import AlterarAgricultor from './components/Pages/Agricultor/AlterarAgricultor';
+import ExcluirAgricultor from './components/Pages/Agricultor/ExcluirAgricultor';
 
 function Login() {
   return (
@@ -49,6 +52,12 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/components/Home" element={<Home />} />
       <Route path="/cadastrar" element={<Cadastro />} />
+      <Route path="/Agricultor" element={<Agricultor />} />
+      <Route path="/InserirAgricultor" element={<InserirAgricultor />} />
+      <Route path="/AlterarAgricultor" element={<AlterarAgricultor />} />
+      <Route path="/ExcluirAgricultor" element={<ExcluirAgricultor />} />
+
+
       {/* Outras rotas podem ser adicionadas aqui */}
     </Routes>
   </Router>

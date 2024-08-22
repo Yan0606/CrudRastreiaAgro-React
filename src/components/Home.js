@@ -1,5 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom'; // Adicione esta linha
+
 
 function Home() {
     return (
@@ -11,7 +13,7 @@ function Home() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <NavDropdown title="Agricultor" id="agricultor-dropdown">
-                                <NavDropdown.Item href="#gerenciar-agricultor">Gerenciar agricultor</NavDropdown.Item>
+                                <NavDropdown.Item as={NavLink} to="/Agricultor">Gerenciar agricultor</NavDropdown.Item>
                                 <NavDropdown.Item href="#relatorio-agricultor">Relatório de agricultor</NavDropdown.Item>
                             </NavDropdown>
 
@@ -50,10 +52,6 @@ function Home() {
                 </Container>
             </Navbar>
 
-            <div className="container mt-3">
-                <h1>Bem-vindo ao RastreiaAgro</h1>
-                {/* Conteúdo da página vai aqui */}
-            </div>
         </div>
     );
 }
