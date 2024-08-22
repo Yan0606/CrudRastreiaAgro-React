@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { NavLink, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Home from './components/Home';
+import Cadastro from './components/Cadastro';
+
 
 function Login() {
   return (
@@ -43,12 +45,13 @@ function Login() {
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/components/Home" element={<Home />} />
-        {/* Outras rotas podem ser adicionadas aqui */}
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/components/Home" element={<Home />} />
+      <Route path="/cadastrar" element={<Cadastro />} />
+      {/* Outras rotas podem ser adicionadas aqui */}
+    </Routes>
+  </Router>
   );
 }
 
