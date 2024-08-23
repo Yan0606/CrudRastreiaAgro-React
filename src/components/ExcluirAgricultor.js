@@ -8,12 +8,6 @@ const ExcluirAgricultor = () => {
     const navigate = useNavigate();
     const agricultor = location.state?.agricultor || {};
 
-    const handleExcluir = () => {
-        // Lógica para excluir o agricultor
-        console.log('Agricultor excluído:', agricultor);
-        navigate('/');  // Redireciona após a exclusão
-    };
-
     return (
         
         <div>
@@ -56,7 +50,7 @@ const ExcluirAgricultor = () => {
                     />
                 </Form.Group>
 
-                <Button variant="danger" onClick={handleExcluir}>
+                <Button variant="danger" href='/GerenciamentoAgricultor' >
                     Excluir
                 </Button>
             </Form>

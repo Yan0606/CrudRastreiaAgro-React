@@ -77,7 +77,7 @@ const EditarAgricultor = () => {
                     />
                 </Form.Group>
 
-                <Button variant="warning" type="submit">
+                <Button variant="warning" type="submit" href='/GerenciamentoAgricultor'>
                     Alterar
                 </Button>
             </Form>

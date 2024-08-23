@@ -55,8 +55,8 @@ function GerenciamentoAgricultor() {
                             <td>undefined</td>
                             <td>31231321324</td>
                             <td>
-                                <Button variant="warning" className="me-2">Alterar</Button>
-                                <Button variant="danger">Excluir</Button>
+                                <Button variant="warning" className="me-2" onClick={handleEditarClick} >Alterar</Button>
+                                <Button variant="danger" onClick={handleExcluirClick}>Excluir</Button>
                             </td>
                         </tr>
                     </tbody>

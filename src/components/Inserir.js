@@ -88,7 +88,7 @@ const Inserir = () => {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" href='/GerenciamentoAgricultor'>
                     Inserir
                 </Button>
             </Form>
