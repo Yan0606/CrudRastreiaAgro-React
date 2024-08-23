@@ -29,7 +29,7 @@ function Login() {
 
                 <div className="mb-3">
                   <p>
-                    Ainda não tem conta? Clique <NavLink to="/cadastrar">aqui</NavLink> para se cadastrar!
+                    Ainda não tem conta? Clique <NavLink to="/Cadastro">aqui</NavLink> para se cadastrar!
                   </p>
                 </div>
 

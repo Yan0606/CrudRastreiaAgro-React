@@ -43,7 +43,7 @@ function NavbarComp() {
                             <NavDropdown.Item href="#gerenciar-safra">Gerenciar safra</NavDropdown.Item>
                             <NavDropdown.Item href="#relatorio-safra">Relatório de safra</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link to="../App.js">Sair</Nav.Link>
+                        <Nav.Link href='/'>Sair</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -36,7 +36,7 @@ function Cadastro() {
                                     </p>
                                 </div>
 
-                                <Button variant="primary" type="submit">Cadastrar</Button>
+                                <Button variant="primary" type="submit" href="/Home">Cadastrar</Button>
                             </Form>
                         </Card.Body>
                     </Card>
