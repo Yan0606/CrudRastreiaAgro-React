@@ -1,61 +1,28 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import NavbarComp from './NavbarComp';
 
-const ExcluirAgricultor = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const agricultor = location.state?.agricultor || {};
+const ExcluirAgricultor = ({ agricultores, excluirAgricultor }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const agricultor = agricultores.find(ag => ag.id === id);
 
-    return (
-        
-        <div>
-            <NavbarComp/>
-            <h2>Excluir agricultor</h2>
-            <Form>
-                <Form.Group controlId="formNomeAgricultor" className="mb-3">
-                    <Form.Label>Nome do agricultor</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={agricultor.nomeAgricultor}
-                        readOnly
-                    />
-                </Form.Group>
+  const handleExcluir = () => {
+    excluirAgricultor(id);
+    navigate('/GerenciamentoAgricultor');
+  };
 
-                <Form.Group controlId="formEmail" className="mb-3">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={agricultor.email}
-                        readOnly
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formSenha" className="mb-3">
-                    <Form.Label>Senha</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={agricultor.senha}
-                        readOnly
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formCpf" className="mb-3">
-                    <Form.Label>CPF</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={agricultor.cpf}
-                        readOnly
-                    />
-                </Form.Group>
-
-                <Button variant="danger" href='/GerenciamentoAgricultor' >
-                    Excluir
-                </Button>
-            </Form>
-        </div>
-    );
+  return (
+    <div>
+      <NavbarComp />
+      <div className="container mt-5">
+        <h2>Excluir Agricultor</h2>
+        <p>Tem certeza que deseja excluir o agricultor <strong>{agricultor?.nomeAgricultor}</strong>?</p>
+        <button className="btn btn-danger me-2" onClick={handleExcluir}>Sim</button>
+        <button className="btn btn-secondary" onClick={() => navigate('/GerenciamentoAgricultor')}>Não</button>
+      </div>
+    </div>
+  );
 };
 
 export default ExcluirAgricultor;

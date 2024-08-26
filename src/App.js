@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { NavLink, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Cadastro from './components/Cadastro';
@@ -46,16 +46,50 @@ function Login() {
 }
 
 function App() {
+  const [agricultores, setAgricultores] = useState([]);
+
+  const adicionarAgricultor = (novoAgricultor) => {
+    setAgricultores([...agricultores, novoAgricultor]);
+  };
+
+  const editarAgricultor = (agricultorEditado) => {
+    setAgricultores(agricultores.map(agricultor =>
+      agricultor.id === agricultorEditado.id ? agricultorEditado : agricultor
+    ));
+  };
+
+  const excluirAgricultor = (id) => {
+    setAgricultores(agricultores.filter(agricultor => agricultor.id !== id));
+  };
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/Cadastro" element={<Cadastro />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/GerenciamentoAgricultor" element={<GerenciamentoAgricultor />} />
-        <Route path="/Inserir" element={<Inserir />} />
-        <Route path="/EditarAgricultor" element={<EditarAgricultor />} />
-        <Route path="/ExcluirAgricultor" element={<ExcluirAgricultor />} />
+        <Route 
+          path="/GerenciamentoAgricultor" 
+          element={<GerenciamentoAgricultor 
+            agricultores={agricultores} 
+            excluirAgricultor={excluirAgricultor} />} 
+        />
+        <Route 
+          path="/Inserir" 
+          element={<Inserir 
+            adicionarAgricultor={adicionarAgricultor} />} 
+        />
+        <Route 
+          path="/EditarAgricultor/:id" 
+          element={<EditarAgricultor 
+            agricultores={agricultores} 
+            editarAgricultor={editarAgricultor} />} 
+        />
+        <Route 
+          path="/ExcluirAgricultor/:id" 
+          element={<ExcluirAgricultor 
+            agricultores={agricultores} 
+            excluirAgricultor={excluirAgricultor} />} 
+        />
       </Routes>
     </Router>
   );
