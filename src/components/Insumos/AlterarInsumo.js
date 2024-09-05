@@ -18,11 +18,12 @@ const AlterarInsumo = () => {
         const carregarInsumo = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:3000/api/insumos/editar/${id}`, {
+                const response = await axios.get(`http://localhost:3000/api/insumo/editar/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                console.log(response.data)
                 const insumo = response.data;
                 setNome(insumo.nome);
                 setMarca(insumo.marca);

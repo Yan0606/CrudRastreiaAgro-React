@@ -15,7 +15,7 @@ const NovoInsumo = () => {
         try {
             const token = localStorage.getItem('token'); // Obter o token do localStorage
             const novoLivro = { nome: nome, autor: autor, valor: valor }; // Estrutura de dados para a API
-            await axios.post('http://localhost:8000/api/livros/novo', novoLivro, {
+            await axios.post('http://localhost:3000/api/insumo/novo', novoLivro, {
                 headers: {
                     Authorization: `Bearer ${token}` // Passar o token no cabeçalho
                 }
