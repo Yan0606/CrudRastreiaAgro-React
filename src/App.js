@@ -11,6 +11,10 @@ import Safra from './components/Safra/safra';
 import NovaSafra from './components/Safra/novaSafra';
 import AlterarSafra from './components/Safra/alterarSafra';
 
+import Talhoes from './components/Talhoes/Talhoes';
+import AlterarTalhoes from './components/Talhoes/AlterarTalhoes';
+import NovoTalhoes from './components/Talhoes/NovoTalhoes';
+
 function App() {
   return (
     <Router>
@@ -26,6 +30,11 @@ function App() {
         <Route path="/safra" element={<Safra />} />
         <Route path="/nova-safra" element={<NovaSafra />} />
         <Route path="/alterar-safra/:id" element={<AlterarSafra />} />
+
+        <Route path="/talhoes" element={<Talhoes />} />
+        <Route path="/novo-talhoes" element={<NovoTalhoes />} />
+        <Route path="/alterar-talhoes/:id" element={<AlterarTalhoes />} />
+
 
       </Routes>
     </Router>
