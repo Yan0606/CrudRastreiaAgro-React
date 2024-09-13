@@ -24,8 +24,8 @@ const AlterarSafra = () => {
                 });
                 const safra = response.data;
                 setNome(safra.nome);
-                setDataInicio(safra.dataInicio);
-                setDataFim(safra.dataFim);
+                setDataInicio(safra.dataInicio.substring(0,10));
+                setDataFim(safra.dataFim.substring(0,10));
 
             } catch (error) {
                 console.error('Erro ao carregar a safra:', error.response ? error.response.data : error.message);

@@ -13,19 +13,38 @@ const NovaSafra = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem('token'); // Obter o token do localStorage
-            const novaSafra = { nome: nome, dataInicio: dataInicio, dataFim: dataFim }; // Estrutura de dados para a API
+            // Obter o token do localStorage
+            const token = localStorage.getItem('token');
+
+            // Verificar se o token está presente
+            if (!token) {
+                alert('Usuário não autenticado. Por favor, faça login.');
+                navigate('/login'); // Redirecionar para a página de login se o token não existir
+                return;
+            }
+
+            // Estrutura de dados para a API
+            const novaSafra = { nome, dataInicio, dataFim };
+
+            // Fazer a requisição POST com o token no cabeçalho
             await axios.post('http://localhost:3000/api/safra/novo', novaSafra, {
                 headers: {
-                    Authorization: `Bearer ${token}` // Passar o token no cabeçalho
-                }.get
+                    Authorization: `Bearer ${token}`, // Passar o token no cabeçalho
+                },
             });
 
             alert('Safra cadastrada com sucesso!');
-            navigate('/safra'); // Redirecionar para a lista de livros após o cadastro
+            navigate('/safra'); // Redirecionar para a lista de safras após o cadastro
         } catch (error) {
             console.error('Erro ao cadastrar a safra:', error.response ? error.response.data : error.message);
-            alert('Falha ao cadastrar a safra. Tente novamente.');
+
+            // Verifica se o erro é 401 e redireciona para o login
+            if (error.response && error.response.status === 401) {
+                alert('Sessão expirada ou não autorizada. Por favor, faça login novamente.');
+                navigate('/login');
+            } else {
+                alert('Falha ao cadastrar a safra. Tente novamente.');
+            }
         }
     };
 
@@ -50,7 +69,7 @@ const NovaSafra = () => {
                         <Form.Label>Data de início</Form.Label>
                         <Form.Control
                             type="date"
-                            placeholder="Digite a data de incio da Safra"
+                            placeholder="Digite a data de início da Safra"
                             value={dataInicio}
                             onChange={(e) => setDataInicio(e.target.value)}
                             required
@@ -78,4 +97,3 @@ const NovaSafra = () => {
 };
 
 export default NovaSafra;
-

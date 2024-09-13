@@ -1,14 +1,14 @@
 import { Table, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import BarraNavegacao from '../BarraNavegacao';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const Safra = () => {
     const navigate = useNavigate();
     const [safra, setSafra] = useState([]);
 
-    const fetchSafra = async () => {
+    const fetchSafra = useCallback(async () => {
         try {
             // Obtendo o token do localStorage
             const token = localStorage.getItem('token');
@@ -31,7 +31,7 @@ const Safra = () => {
                 setSafra(response.data); // Ajuste para manipular o estado conforme necessário
             }
         } catch (error) {
-            console.error('Erro ao buscar Safra:', error.response ? error.response.data : error.message);
+            console.error('Erro ao buscar Safra:', error);
 
             // Verifica se o erro é 401 e redireciona para o login
             if (error.response && error.response.status === 401) {
@@ -39,11 +39,11 @@ const Safra = () => {
                 navigate('/login');
             }
         }
-    };
+    }, [navigate]); // Inclua todas as dependências utilizadas dentro da função
 
     useEffect(() => {
         fetchSafra();
-    }, []);
+    }, [fetchSafra]); // Adiciona fetchSafra como dependência
 
     const handleNovaSafra = () => {
         navigate('/nova-safra');
