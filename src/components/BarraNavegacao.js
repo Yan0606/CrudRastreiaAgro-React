@@ -25,6 +25,11 @@ const BarraNavegacao = () => {
                 <NavDropdown.Item href="#">Relatórios</NavDropdown.Item>
               </NavDropdown>
 
+              <NavDropdown title="Maquinas" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/maquinas">Gerenciar</NavDropdown.Item>
+                <NavDropdown.Item href="#">Relatórios</NavDropdown.Item>
+              </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -15,6 +15,10 @@ import Talhoes from './components/Talhoes/Talhoes';
 import AlterarTalhoes from './components/Talhoes/AlterarTalhoes';
 import NovoTalhoes from './components/Talhoes/NovoTalhoes';
 
+import Maquinas from './components/Maquinas/Maquinas';
+import NovoMaquina from './components/Maquinas/NovoMaquina';
+import AlterarMaquina from './components/Maquinas/AlterarMaquina';
+
 function App() {
   return (
     <Router>
@@ -34,6 +38,10 @@ function App() {
         <Route path="/talhoes" element={<Talhoes />} />
         <Route path="/novo-talhoes" element={<NovoTalhoes />} />
         <Route path="/alterar-talhoes/:id" element={<AlterarTalhoes />} />
+
+        <Route path="/maquinas" element={<Maquinas />} />
+        <Route path="/nova-maquina" element={<NovoMaquina />} />
+        <Route path="/alterar-maquina/:id" element={<AlterarMaquina />} />
 
 
       </Routes>
