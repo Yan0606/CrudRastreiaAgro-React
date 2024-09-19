@@ -24,12 +24,12 @@ const AlterarTalhoes = () => {
                 });
                 const talhoes = response.data;
                 setNome(talhoes.nome);
-                setLocalizacao(talhoes.localizacao);
-                setArea(talhoes.area);
+                setLocalizacao(talhoes.localizacao.substring(0,10));
+                setArea(talhoes.area.substring(0,10));
 
             } catch (error) {
-                console.error('Erro ao carregar a safra:', error.response ? error.response.data : error.message);
-                alert('Falha ao carregar a safra. Tente novamente.');
+                console.error('Erro ao carregar o talhao:', error.response ? error.response.data : error.message);
+                alert('Falha ao carregar o talhao. Tente novamente.');
             }
         };
         carregarTalhoes();
@@ -45,11 +45,11 @@ const AlterarTalhoes = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert('Safra atualizada com sucesso!');
+            alert('talhao atualizada com sucesso!');
             navigate('/talhoes');
         } catch (error) {
-            console.error('Erro ao atualizar a safra:', error.response ? error.response.data : error.message);
-            alert('Falha ao atualizar a safra. Tente novamente.');
+            console.error('Erro ao atualizar o talhao:', error.response ? error.response.data : error.message);
+            alert('Falha ao atualizar o talhao. Tente novamente.');
         }
     };
 
@@ -57,7 +57,7 @@ const AlterarTalhoes = () => {
         <>
             <BarraNavegacao />
             <Container className="mt-5">
-                <h2>Alterar talhoes</h2>
+                <h2>Alterar Talhoes</h2>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formNome">
                         <Form.Label>Nome</Form.Label>
@@ -73,7 +73,7 @@ const AlterarTalhoes = () => {
                     <Form.Group controlId="formLocalizacao" className="mt-3">
                         <Form.Label>Localizacao</Form.Label>
                         <Form.Control
-                            type="date"
+                            type="text"
                             placeholder="Digite a localizacao do talhao"
                             value={localizacao}
                             onChange={(e) => setLocalizacao(e.target.value)}
@@ -84,8 +84,8 @@ const AlterarTalhoes = () => {
                     <Form.Group controlId="formArea" className="mt-3">
                         <Form.Label>Area</Form.Label>
                         <Form.Control
-                            type="date"
-                            placeholder="Digite a area"
+                            type="text"
+                            placeholder="Digite a area da safra"
                             value={area}
                             onChange={(e) => setArea(e.target.value)}
                             required
