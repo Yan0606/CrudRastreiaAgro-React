@@ -23,13 +23,12 @@ const AlterarInsumo = () => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(response.data)
                 const insumo = response.data;
-                setNome(insumo.nome);
-                setMarca(insumo.marca);
-                setDescricao(insumo.descricao);
-                setFoto(insumo.foto);
-
+                // Garante que os valores não sejam indefinidos
+                setNome(insumo[0].nome || '');
+                setMarca(insumo[0].marca || '');
+                setDescricao(insumo[0].descricao || '');
+                setFoto(insumo[0].foto || '');
             } catch (error) {
                 console.error('Erro ao carregar o insumo:', error.response ? error.response.data : error.message);
                 alert('Falha ao carregar o insumo. Tente novamente.');
@@ -42,7 +41,8 @@ const AlterarInsumo = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
-            const insumoAtualizado = { nome: nome, marca: marca, descricao: descricao, foto: foto };
+            const insumoAtualizado = { nome, marca, descricao, foto };
+
             await axios.put(`http://localhost:3000/api/insumo/editar/${id}`, insumoAtualizado, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -88,7 +88,7 @@ const AlterarInsumo = () => {
                         <Form.Label>Descrição</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Digite a descrição do livro"
+                            placeholder="Digite a descrição do insumo"
                             value={descricao}
                             onChange={(e) => setDescricao(e.target.value)}
                             required
@@ -102,7 +102,6 @@ const AlterarInsumo = () => {
                             placeholder="Digite a foto do insumo(temporariamente)"
                             value={foto}
                             onChange={(e) => setFoto(e.target.value)}
-                            required
                         />
                     </Form.Group>
 
@@ -116,4 +115,3 @@ const AlterarInsumo = () => {
 };
 
 export default AlterarInsumo;
-

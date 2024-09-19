@@ -23,10 +23,10 @@ const AlterarMaquina = () => {
                     }
                 });
                 const maquina = response.data;
-                setMarca(maquina.marca);
-                setModelo(maquina.modelo);
-                setPlaca(maquina.placa);
-                setNome(maquina.nome);
+                setMarca(maquina[0].marca);
+                setModelo(maquina[0].modelo);
+                setPlaca(maquina[0].placa);
+                setNome(maquina[0].nome);
             } catch (error) {
                 console.error('Erro ao carregar máquina:', error.response ? error.response.data : error.message);
                 alert('Falha ao carregar a máquina. Tente novamente.');

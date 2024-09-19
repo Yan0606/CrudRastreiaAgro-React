@@ -30,6 +30,11 @@ const BarraNavegacao = () => {
                 <NavDropdown.Item href="#">Relatórios</NavDropdown.Item>
               </NavDropdown>
 
+              <NavDropdown title="Cultura" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/cultura">Gerenciar</NavDropdown.Item>
+                <NavDropdown.Item href="#">Relatórios</NavDropdown.Item>
+              </NavDropdown>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

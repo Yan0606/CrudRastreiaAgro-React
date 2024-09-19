@@ -19,6 +19,10 @@ import Maquinas from './components/Maquinas/Maquinas';
 import NovoMaquina from './components/Maquinas/NovoMaquina';
 import AlterarMaquina from './components/Maquinas/AlterarMaquina';
 
+import Cultura from './components/Cultura/Cultura';
+import NovaCultura from './components/Cultura/NovoCultura';
+import AlterarCultura from './components/Cultura/AlterarCultura';
+
 function App() {
   return (
     <Router>
@@ -42,6 +46,10 @@ function App() {
         <Route path="/maquinas" element={<Maquinas />} />
         <Route path="/nova-maquina" element={<NovoMaquina />} />
         <Route path="/alterar-maquina/:id" element={<AlterarMaquina />} />
+
+        <Route path="/cultura" element={<Cultura />} />
+        <Route path="/novo-cultura" element={<NovaCultura />} />
+        <Route path="/alterar-cultura/:id" element={<AlterarCultura />} />
 
 
       </Routes>
