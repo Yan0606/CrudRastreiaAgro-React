@@ -49,7 +49,7 @@ const AlterarInsumo = () => {
                 }
             });
             alert('Insumo atualizado com sucesso!');
-            navigate('/insumo');
+            navigate('/insumos');
         } catch (error) {
             console.error('Erro ao atualizar o insumo:', error.response ? error.response.data : error.message);
             alert('Falha ao atualizar o insumo. Tente novamente.');
