@@ -49,7 +49,7 @@ const NovaCultura = () => {
                     <Form.Group controlId="formTemp" className="mt-3">
                         <Form.Label>Tempo de Produção</Form.Label>
                         <Form.Control
-                            type="text"
+                            type="date"
                             placeholder="Digite o Tempo de Produção da cultura"
                             value={tempoProducao}
                             onChange={(e) => setTempoProducao(e.target.value)}
