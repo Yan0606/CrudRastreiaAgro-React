@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import BarraNavegacao from '../BarraNavegacao';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'; // Importando SweetAlert2
 
 const AlterarMaquina = () => {
     const { id } = useParams();
@@ -29,7 +30,14 @@ const AlterarMaquina = () => {
                 setNome(maquina[0].nome);
             } catch (error) {
                 console.error('Erro ao carregar máquina:', error.response ? error.response.data : error.message);
-                alert('Falha ao carregar a máquina. Tente novamente.');
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Falha ao carregar a máquina. Tente novamente.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                });
             }
         };
         carregarMaquina();
@@ -45,11 +53,26 @@ const AlterarMaquina = () => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            alert('Máquina atualizada com sucesso!');
-            navigate('/maquinas');
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Máquina atualizada com sucesso.',
+                icon: 'success',
+                background: '#2e2e2e',
+                color: '#fff',
+                confirmButtonColor: '#3085d6',
+            }).then(() => {
+                navigate('/maquinas');
+            });
         } catch (error) {
             console.error('Erro ao atualizar a Máquina:', error.response ? error.response.data : error.message);
-            alert('Falha ao atualizar a máquina. Tente novamente.');
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Falha ao atualizar a máquina. Tente novamente.',
+                icon: 'error',
+                background: '#2e2e2e',
+                color: '#fff',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 

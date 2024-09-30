@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import BarraNavegacao from '../BarraNavegacao';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,18 +16,59 @@ const NovoMaquina = () => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');
+
+            if (!token) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Usuário não eutenticado. Por favor, faça o Login!',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                });
+                navigate('/login');
+                return;
+            }
             const novaMaquina = { marca, modelo, placa, nome };
             await axios.post('http://localhost:3000/api/maquina/novo', novaMaquina, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            alert('Máquina cadastrada com sucesso!');
-            navigate('/maquinas');
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Maquina cadastrada com sucesso!',
+                icon: 'success',
+                background: '#2e2e2e',
+                color: '#fff',
+                confirmButtonColor: '#3085d6',
+                iconColor: '#4caf50',
+            }).then(() => {
+                navigate('/maquinas');
+            });
         } catch (error) {
             console.error('Erro ao cadastrar a máquina:', error.response ? error.response.data : error.message);
-            alert('Falha ao cadastrar a máquina. Tente novamente.');
+            if (error.response && error.response.status === 401) {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Sessão expirada ou não autorizada. Por favor, faça login novamente.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                }).then(() => {
+                    navigate('/login');
+                });
+            } else {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Falha ao cadastrar a máquina. Tente novamente.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                });
+            }
         }
     };
 

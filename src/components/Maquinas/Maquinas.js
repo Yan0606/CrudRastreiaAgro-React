@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BarraNavegacao from '../BarraNavegacao';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'; // Importando SweetAlert2
 
 const Maquinas = () => {
     const navigate = useNavigate();
@@ -35,22 +36,48 @@ const Maquinas = () => {
     };
 
     const handleExcluirMaquina = async (id) => {
-        const confirmar = window.confirm("Você tem certeza que deseja excluir esta Máquina?");
-        if (confirmar) {
-            try {
-                const token = localStorage.getItem('token');
-                await axios.delete(`http://localhost:3000/api/maquina/excluir/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                setMaquinas(maquinas.filter(maquina => maquina.id !== id));
-                alert('Máquina excluída com sucesso!');
-            } catch (error) {
-                console.error('Erro ao excluir a máquina:', error.response ? error.response.data : error.message);
-                alert('Falha ao excluir a máquina. Tente novamente.');
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: 'Essa ação não pode ser desfeita!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, excluir!',
+            cancelButtonText: 'Cancelar',
+            background: '#2e2e2e',
+            color: '#fff',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const token = localStorage.getItem('token');
+                    await axios.delete(`http://localhost:3000/api/maquina/excluir/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setMaquinas(maquinas.filter((maquina) => maquina.id !== id));
+                    Swal.fire({
+                        title: 'Excluído!',
+                        text: 'Máquina excluída com sucesso.',
+                        icon: 'success',
+                        background: '#2e2e2e',
+                        color: '#fff',
+                        confirmButtonColor: '#3085d6',
+                    });
+                } catch (error) {
+                    console.error('Erro ao excluir a máquina:', error.response ? error.response.data : error.message);
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: 'Falha ao excluir a máquina. Tente novamente.',
+                        icon: 'error',
+                        background: '#2e2e2e',
+                        color: '#fff',
+                        confirmButtonColor: '#d33',
+                    });
+                }
             }
-        }
+        });
     };
 
     return (
