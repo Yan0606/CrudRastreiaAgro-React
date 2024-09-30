@@ -69,11 +69,11 @@ const AlterarCultura = () => {
                             required
                         />
                     </Form.Group>
-
+                
                     <Form.Group controlId="formTemp" className="mt-3">
-                        <Form.Label>Marca</Form.Label>
+                        <Form.Label>Tempo de produção</Form.Label>
                         <Form.Control
-                            type="text"
+                            type="date"
                             placeholder="Digite o tempo de produção do insumo"
                             value={tempoProducao}
                             onChange={(e) => setTempoProducao(e.target.value)}
