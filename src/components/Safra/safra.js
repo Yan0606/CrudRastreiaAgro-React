@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BarraNavegacao from '../BarraNavegacao';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'; // Importando SweetAlert2
 
 const Safra = () => {
     const navigate = useNavigate();
@@ -10,40 +11,50 @@ const Safra = () => {
 
     const fetchSafra = useCallback(async () => {
         try {
-            // Obtendo o token do localStorage
             const token = localStorage.getItem('token');
-
-            // Verifica se o token existe antes de prosseguir
             if (!token) {
-                alert('Usuário não autenticado. Por favor, faça login.');
-                navigate('/login'); // Redireciona para a página de login se o token não existir
+                Swal.fire({
+                    title: 'Usuário não autenticado',
+                    text: 'Por favor, faça login.',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                }).then(() => {
+                    navigate('/login');
+                });
                 return;
             }
 
-            // Fazendo a requisição com o token de autenticação
             const response = await axios.get('http://localhost:3000/api/safra/', {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho da requisição
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
             if (response.status === 200) {
-                setSafra(response.data); // Ajuste para manipular o estado conforme necessário
+                setSafra(response.data);
             }
         } catch (error) {
             console.error('Erro ao buscar Safra:', error);
-
-            // Verifica se o erro é 401 e redireciona para o login
             if (error.response && error.response.status === 401) {
-                alert('Sessão expirada ou não autorizada. Por favor, faça login novamente.');
-                navigate('/login');
+                Swal.fire({
+                    title: 'Sessão expirada',
+                    text: 'Por favor, faça login novamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                }).then(() => {
+                    navigate('/login');
+                });
             }
         }
-    }, [navigate]); // Inclua todas as dependências utilizadas dentro da função
+    }, [navigate]);
 
     useEffect(() => {
         fetchSafra();
-    }, [fetchSafra]); // Adiciona fetchSafra como dependência
+    }, [fetchSafra]);
 
     const handleNovaSafra = () => {
         navigate('/nova-safra');
@@ -54,22 +65,47 @@ const Safra = () => {
     };
 
     const handleExcluirSafra = async (id) => {
-        const confirmar = window.confirm('Você tem certeza que deseja excluir esta Safra?');
-        if (confirmar) {
-            try {
-                const token = localStorage.getItem('token');
-                await axios.delete(`http://localhost:3000/api/safra/excluir/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setSafra(safra.filter((safra) => safra.id !== id));
-                alert('Safra excluída com sucesso!');
-            } catch (error) {
-                console.error('Erro ao excluir safra:', error.response ? error.response.data : error.message);
-                alert('Falha ao excluir a safra. Tente novamente.');
+        Swal.fire({
+            title: 'Você tem certeza?',
+            text: 'Essa ação não pode ser desfeita!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, excluir!',
+            background: '#2e2e2e',
+            color: '#fff',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const token = localStorage.getItem('token');
+                    await axios.delete(`http://localhost:3000/api/safra/excluir/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setSafra(safra.filter((safra) => safra.id !== id));
+                    Swal.fire({
+                        title: 'Excluído!',
+                        text: 'Safra excluída com sucesso.',
+                        icon: 'success',
+                        background: '#2e2e2e',
+                        color: '#fff',
+                        confirmButtonColor: '#3085d6',
+                    });
+                } catch (error) {
+                    console.error('Erro ao excluir safra:', error.response ? error.response.data : error.message);
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: 'Falha ao excluir a safra. Tente novamente.',
+                        icon: 'error',
+                        background: '#2e2e2e',
+                        color: '#fff',
+                        confirmButtonColor: '#d33',
+                    });
+                }
             }
-        }
+        });
     };
 
     return (
@@ -78,7 +114,7 @@ const Safra = () => {
             <Container className="mt-5">
                 <h2>Gerenciar Safra</h2>
                 <Button variant="primary" className="mb-3" onClick={handleNovaSafra}>
-                    Novo Safra
+                    Nova Safra
                 </Button>
                 <Table striped bordered hover>
                     <thead>
@@ -86,6 +122,7 @@ const Safra = () => {
                             <th>Nome</th>
                             <th>Data de início</th>
                             <th>Data Final</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
