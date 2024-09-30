@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import BarraNavegacao from '../BarraNavegacao';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,32 +19,61 @@ const NovaSafra = () => {
 
             // Verificar se o token está presente
             if (!token) {
-                alert('Usuário não autenticado. Por favor, faça login.');
-                navigate('/login'); // Redirecionar para a página de login se o token não existir
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Usuário não autenticado. Por favor, faça login.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                });
+                navigate('/login');
                 return;
             }
 
             // Estrutura de dados para a API
             const novaSafra = { nome, dataInicio, dataFim };
 
-            // Fazer a requisição POST com o token no cabeçalho
             await axios.post('http://localhost:3000/api/safra/novo', novaSafra, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Passar o token no cabeçalho
+                    Authorization: `Bearer ${token}`, 
                 },
             });
 
-            alert('Safra cadastrada com sucesso!');
-            navigate('/safra'); // Redirecionar para a lista de safras após o cadastro
+            Swal.fire({
+                title: 'Sucesso!',
+                text: 'Safra cadastrada com sucesso!',
+                icon: 'success',
+                background: '#2e2e2e', 
+                color: '#fff', 
+                confirmButtonColor: '#3085d6',
+                iconColor: '#4caf50', 
+            }).then(() => {
+                navigate('/safra');
+            });
         } catch (error) {
             console.error('Erro ao cadastrar a safra:', error.response ? error.response.data : error.message);
 
-            // Verifica se o erro é 401 e redireciona para o login
             if (error.response && error.response.status === 401) {
-                alert('Sessão expirada ou não autorizada. Por favor, faça login novamente.');
-                navigate('/login');
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Sessão expirada ou não autorizada. Por favor, faça login novamente.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                }).then(() => {
+                    navigate('/login');
+                });
             } else {
-                alert('Falha ao cadastrar a safra. Tente novamente.');
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Falha ao cadastrar a safra. Tente novamente.',
+                    icon: 'error',
+                    background: '#2e2e2e',
+                    color: '#fff',
+                    confirmButtonColor: '#d33',
+                });
             }
         }
     };
